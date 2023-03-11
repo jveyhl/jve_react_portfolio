@@ -1,40 +1,38 @@
-import React from "react";
-import { removeHyphensAndCapitalize } from "../../utils/helpers";
+import React, { useState } from "react";
+import Project from "../Project";
+import { capitalizeFirstLetter } from "../../utils/helpers";
 
-function Project({ project }) {
-  const { name, repo, link, description } = project;
+function Portfolio() {
+  const [pages] = useState([
+    {
+      name: "portfolio",
+    },
+  ]);
+  const [currentPage] = useState(pages[0]);
+  const [projects] = useState([
+    {
+      name: "add name",
+      description: "add technologies used",
+      link: "link to deployed app",
+      repo: "link to github rep",
+    },
+  ]);
 
   return (
-    <div className="col-lg-4 col-sm-6">
-      <div className="portfolio-box" key={name}>
-        <img
-          src={require(`../../assets/img/portfolio/${name}.jpg`)}
-          alt={removeHyphensAndCapitalize(name)}
-          className="img-fluid"
-        />
-        <div className="portfolio-box-caption">
-          <div className="portfolio-box-caption-content">
-            <a
-              href={repo}
-              className="project-category text-faded"
-              target="_blank"
-            >
-              <i className="fab fa-github"></i>
-            </a>
-            <br />
-            <a
-              href={link}
-              className="project-category text-faded"
-              target="_blank"
-            >
-              {removeHyphensAndCapitalize(name)}
-            </a>{" "}
-            <p className="project-name">{description}</p>
-          </div>
+    <section className="p-0">
+      <div className="container-fluid p-0">
+        <h1 className="text-center margin-top">
+          {capitalizeFirstLetter(currentPage.name)}
+        </h1>
+        <hr className="my-4" />
+        <div className="row no-gutters popup-gallery">
+          {projects.map((project, idx) => (
+            <Project project={project} key={"project" + idx} />
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
-export default Project;
+export default Portfolio;
